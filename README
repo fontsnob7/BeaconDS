@@ -1,1 +1,73 @@
+# BeaconDS
 
+A comprehensive design token system and component library built with GitHub, Figma, and Angular.
+
+## Overview
+
+BeaconDS provides:
+- **180+ design tokens** for colors, spacing, typography, and more
+- **Figma variables** for design consistency
+- **CSS custom properties** for web applications
+- **Angular components** with built-in token bindings
+- **Light/Dark mode** support out of the box
+- **Automated synchronization** across all platforms
+
+## Structure
+
+- **tokens/** - Design token definitions (single source of truth)
+- **scripts/** - Build scripts that generate Figma/CSS/Angular from tokens
+- **packages/angular/** - Angular standalone components and styles
+- **docs/** - Documentation and guides
+
+## Quick Start
+
+1. Edit `tokens/tokens.json` with your design tokens
+2. Push to GitHub
+3. GitHub Actions automatically generates:
+   - Figma variable creation script
+   - CSS custom properties file
+   - Angular TypeScript exports
+
+## Usage
+
+### In Angular
+
+```typescript
+import { DESIGN_TOKENS } from '@beacon-ds/tokens';
+
+// Access tokens programmatically
+const primaryColor = DESIGN_TOKENS.primitives.color.blue['500'];
+```
+
+### In CSS
+
+```css
+.component {
+  background: var(--color-background-primary);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+}
+```
+
+### In Figma
+
+Copy the Figma script from `figma-output.txt` and paste into the Figma plugin console to create all variables automatically.
+
+## Philosophy
+
+BeaconDS follows these principles:
+- **Single Source of Truth** - Tokens defined once in JSON, used everywhere
+- **Automation** - Reduce manual work through scripts and workflows
+- **Consistency** - Figma, code, and design stay synchronized
+- **Scalability** - Easy to add new tokens and components
+- **Accessibility** - Light/Dark modes and semantic color naming
+
+## Contributing
+
+1. Edit `tokens/tokens.json`
+2. Push to GitHub
+3. Let the automation handle the rest
+
+## License
+
+MIT
