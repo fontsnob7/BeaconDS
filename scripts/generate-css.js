@@ -1,10 +1,17 @@
 // scripts/generate-css.js
 const fs = require('fs');
+const path = require('path');
 const tokens = JSON.parse(fs.readFileSync('./tokens/tokens.json', 'utf8'));
+
+// Ensure output directory exists
+const outputDir = './packages/angular/styles';
+if (!fs.existsSync(outputDir)) {
+  fs.mkdirSync(outputDir, { recursive: true });
+}
 
 // Generate CSS variables for light theme
 let cssLight = `:root {
-  /* Primitive Colors - Light Theme */
+  /* Primitive Colors */
 `;
 
 for (const [colorFamily, shades] of Object.entries(tokens.primitives.color)) {
@@ -39,7 +46,7 @@ for (const [name, data] of Object.entries(tokens.primitives.radius)) {
 cssLight += `\n}`;
 
 // Write CSS file
-fs.writeFileSync('./packages/angular/styles/tokens.light.css', cssLight);
+fs.writeFileSync(path.join(outputDir, 'tokens.light.css'), cssLight);
 console.log('✅ CSS generated: packages/angular/styles/tokens.light.css');
 
 function resolveValue(value) {
