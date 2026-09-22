@@ -3,6 +3,12 @@ const fs = require('fs');
 const path = require('path');
 const tokens = JSON.parse(fs.readFileSync('./tokens/tokens.json', 'utf8'));
 
+// Ensure output directory exists
+const outputDir = './packages/angular';
+if (!fs.existsSync(outputDir)) {
+  fs.mkdirSync(outputDir, { recursive: true });
+}
+
 // Generate TypeScript constants
 let typescript = `// AUTO-GENERATED: Do not edit manually
 // Generated from tokens/tokens.json
@@ -42,5 +48,5 @@ for (const [category, items] of Object.entries(tokens.semantic)) {
 typescript += `\n  },\n};\n`;
 
 // Write TypeScript file
-fs.writeFileSync('./packages/angular/tokens.ts', typescript);
+fs.writeFileSync(path.join(outputDir, 'tokens.ts'), typescript);
 console.log('✅ TypeScript generated: packages/angular/tokens.ts');
