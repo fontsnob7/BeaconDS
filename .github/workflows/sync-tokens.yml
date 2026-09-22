@@ -1,1 +1,41 @@
+name: Generate Design Tokens
 
+# Run this workflow when tokens.json changes
+on:
+  push:
+    paths:
+      - 'tokens/tokens.json'
+    branches:
+      - main
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Step 1: Get the code from GitHub
+      - uses: actions/checkout@v3
+      
+      # Step 2: Set up Node.js (the language our scripts use)
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      # Step 3: Run our generate scripts
+      - name: Generate Figma Script
+        run: node scripts/generate-figma.js > figma-output.txt
+      
+      - name: Generate CSS
+        run: node scripts/generate-css.js
+      
+      - name: Generate Angular
+        run: node scripts/generate-angular.js
+      
+      # Step 4: Save the generated files back to GitHub
+      - name: Commit generated files
+        run: |
+          git config user.name "BeaconDS Bot"
+          git config user.email "bot@beacon-ds.dev"
+          git add -A
+          git commit -m "🤖 Auto-generated tokens ($(date))" || echo "No changes"
+          git push
